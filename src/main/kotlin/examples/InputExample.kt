@@ -16,9 +16,6 @@ class InputExample : PulseEngineGame()
 
     override fun onCreate()
     {
-        // Run startup script to get console and graph key bindings
-        engine.console.runScript("/startup.ps")
-
         // Create new surface for UI
         engine.gfx.createSurface2D("uiSurface")
     }

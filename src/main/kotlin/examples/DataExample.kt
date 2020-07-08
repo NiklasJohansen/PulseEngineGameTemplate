@@ -25,14 +25,14 @@ class DataExample : PulseEngineGame()
         engine.data.addSource("Position", "px") { currentPosition }
 
         // Load game state from internal class path
-        val internalState = engine.data.loadState<GameState>("examples/data/internalGameState.dat", fromClassPath = true)
+        val internalState = engine.data.loadState<GameState>("/examples/data/internalGameState.dat", fromClassPath = true)
         Logger.info("Loaded internal game state: $internalState")
 
         // Check if external game state exists
-        if (engine.data.exists("externalGameState.dat"))
+        if (engine.data.exists("/externalGameState.dat"))
         {
             // Load game state form external save directory (loadStateAsync is a non-blocking alternative)
-            val externalState = engine.data.loadState<GameState>("externalGameState.dat")
+            val externalState = engine.data.loadState<GameState>("/externalGameState.dat")
             Logger.info("Loaded external game state: $externalState from ${engine.data.saveDirectory}")
         }
         else Logger.info("External game state does not yet exist at ${engine.data.saveDirectory}")
@@ -72,7 +72,7 @@ class DataExample : PulseEngineGame()
     override fun onDestroy()
     {
         // Save game state to external directory (saveStateAsync is a non-blocking alternative)
-        engine.data.saveState(GameState("External game state!", 1234), "externalGameState.dat")
+        engine.data.saveState(GameState("External game state!", 1234), "/externalGameState.dat")
         Logger.info("Saved external game state to: ${engine.data.saveDirectory}")
     }
 

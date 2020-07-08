@@ -7,7 +7,7 @@ class GameTemplate : PulseEngineGame()
 {
     override fun onCreate()
     {
-        engine.console.runScript("/startup.ps")
+
     }
 
     override fun onUpdate()
