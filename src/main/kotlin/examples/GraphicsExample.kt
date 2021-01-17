@@ -2,7 +2,7 @@ package examples
 
 import no.njoh.pulseengine.PulseEngine
 import no.njoh.pulseengine.data.Mouse
-import no.njoh.pulseengine.data.Texture
+import no.njoh.pulseengine.data.assets.Texture
 import no.njoh.pulseengine.modules.PulseEngineGame
 import no.njoh.pulseengine.modules.graphics.BlendFunction
 import no.njoh.pulseengine.modules.graphics.postprocessing.effects.BloomEffect
@@ -18,7 +18,7 @@ class GraphicsExample : PulseEngineGame()
     override fun onCreate()
     {
         // Load texture from disk
-        engine.asset.loadTexture("/examples/assets/textureAsset.png", "texture")
+        engine.asset.loadTexture("examples/assets/textureAsset.png", "texture")
 
         // Set background color of default surface and add post processing effects
         engine.gfx.mainSurface
@@ -46,7 +46,7 @@ class GraphicsExample : PulseEngineGame()
         val texture = engine.asset.get<Texture>("texture")
 
         // Set the draw color to be used for this surface
-        camSurface.setDrawColor(1f, 1f, 0.8f)
+        camSurface.setDrawColor(0.8f, 0.8f, 1f)
 
         // Draw an untextured quad with the set color
         camSurface.drawQuad(300f, 300f, 300f, 300f)
@@ -62,8 +62,8 @@ class GraphicsExample : PulseEngineGame()
 
         // Draw text to separate UI surface
         val uiSurface = engine.gfx.getSurface2D("uiSurface")
-        uiSurface.setDrawColor(1f, 1f, 0.9f)
-        uiSurface.drawText("Stationary HUD text", 10f, 60f, fontSize = 72f)
+        uiSurface.setDrawColor(1f, 1f, 1f)
+        uiSurface.drawText("Stationary HUD text", 10f, 20f, fontSize = 72f)
     }
 
     override fun onDestroy() { }

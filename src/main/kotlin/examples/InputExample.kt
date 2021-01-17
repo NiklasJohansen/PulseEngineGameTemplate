@@ -46,6 +46,9 @@ class InputExample : PulseEngineGame()
         if (engine.input.scroll != 0)
             println("Scroll: ${engine.input.scroll}")
 
+        // Set default cursor
+        engine.input.setCursor(ARROW)
+
         // Update focus areas
         requestFocusAndUpdateArea(focusAreaOne)
         requestFocusAndUpdateArea(focusAreaTwo)
@@ -72,7 +75,6 @@ class InputExample : PulseEngineGame()
             }
             else engine.input.setCursor(HAND)
         }
-        else engine.input.setCursor(ARROW)
     }
 
     override fun onRender()

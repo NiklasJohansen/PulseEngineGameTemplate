@@ -11,7 +11,7 @@ class ConfigExample : PulseEngineGame()
     override fun onCreate()
     {
         // Loading a configuration file from class path. Engine loads "/application.cfg" on startup.
-        engine.config.load("/examples/config/exampleConfig.cfg")
+        engine.config.load("examples/config/exampleConfig.cfg")
 
         // General config parameters can be set both in config file and directly in game like below
         engine.config.creatorName = "StudioName"

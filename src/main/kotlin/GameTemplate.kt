@@ -1,5 +1,8 @@
 import no.njoh.pulseengine.PulseEngine
 import no.njoh.pulseengine.modules.PulseEngineGame
+import no.njoh.pulseengine.widgets.CommandLine
+import no.njoh.pulseengine.widgets.Profiler
+import no.njoh.pulseengine.widgets.SceneEditor.SceneEditor
 
 fun main() = PulseEngine.run(GameTemplate::class)
 
@@ -7,7 +10,7 @@ class GameTemplate : PulseEngineGame()
 {
     override fun onCreate()
     {
-
+        engine.widget.add(CommandLine(), Profiler(), SceneEditor())
     }
 
     override fun onUpdate()

@@ -3,7 +3,7 @@ package examples
 import no.njoh.pulseengine.PulseEngine
 import no.njoh.pulseengine.data.Key
 import no.njoh.pulseengine.data.Mouse
-import no.njoh.pulseengine.data.Sound
+import no.njoh.pulseengine.data.assets.Sound
 import no.njoh.pulseengine.modules.PulseEngineGame
 import no.njoh.pulseengine.util.Logger
 import kotlin.math.PI
@@ -30,8 +30,8 @@ class AudioExample : PulseEngineGame()
         engine.audio.setOutputDevice(defaultOutputDevice)
 
         // Load sound assets
-        engine.asset.loadSound("/examples/assets/hollow.ogg", "hollow")
-        engine.asset.loadSound("/examples/assets/soundAsset.ogg", "heartBeat")
+        engine.asset.loadSound("examples/assets/hollow.ogg", "hollow")
+        engine.asset.loadSound("examples/assets/soundAsset.ogg", "heartBeat")
     }
 
     override fun onUpdate()
