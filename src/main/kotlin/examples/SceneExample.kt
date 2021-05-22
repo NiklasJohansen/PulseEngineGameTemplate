@@ -9,9 +9,9 @@ import no.njoh.pulseengine.data.assets.Texture
 import no.njoh.pulseengine.modules.Assets
 import no.njoh.pulseengine.modules.PulseEngineGame
 import no.njoh.pulseengine.modules.graphics.Surface2D
-import no.njoh.pulseengine.modules.scene.SceneEntity
 import no.njoh.pulseengine.modules.scene.entities.CameraEntity
-import no.njoh.pulseengine.widgets.SceneEditor.SceneEditor
+import no.njoh.pulseengine.modules.scene.entities.SceneEntity
+import no.njoh.pulseengine.widgets.sceneEditor.SceneEditor
 
 fun main() = PulseEngine.run(SceneExample::class)
 
@@ -51,8 +51,8 @@ class SceneExample : PulseEngineGame()
             camera.viewPortHeight = 800f
 
             // Adds the entities to the scene
-            engine.scene.activeScene.addEntity(entity)
-            engine.scene.activeScene.addEntity(camera)
+            engine.scene.addEntity(entity)
+            engine.scene.addEntity(camera)
         }
 
         // Saves the active scene to disk
