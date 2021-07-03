@@ -3,13 +3,11 @@ package examples
 import no.njoh.pulseengine.PulseEngine
 import no.njoh.pulseengine.data.Color
 import no.njoh.pulseengine.data.Key
-import no.njoh.pulseengine.data.SceneState
 import no.njoh.pulseengine.data.SceneState.*
 import no.njoh.pulseengine.data.assets.Texture
-import no.njoh.pulseengine.modules.Assets
 import no.njoh.pulseengine.modules.PulseEngineGame
 import no.njoh.pulseengine.modules.graphics.Surface2D
-import no.njoh.pulseengine.modules.scene.entities.CameraEntity
+import no.njoh.pulseengine.modules.scene.entities.Camera
 import no.njoh.pulseengine.modules.scene.entities.SceneEntity
 import no.njoh.pulseengine.widgets.sceneEditor.SceneEditor
 
@@ -44,7 +42,7 @@ class SceneExample : PulseEngineGame()
             entity.height = 100f
 
             // Creates a camera entity (provided by engine)
-            val camera = CameraEntity()
+            val camera = Camera()
             camera.x = engine.window.width / 2f
             camera.y = engine.window.height / 2f
             camera.viewPortWidth = 1200f
@@ -124,10 +122,10 @@ class ExampleEntity : SceneEntity()
         x += speed
     }
 
-    override fun onRender(surface: Surface2D, assets: Assets, sceneState: SceneState)
+    override fun onRender(engine: PulseEngine, surface: Surface2D)
     {
         // Gets the texture asses or uses the blank texture if it's not found
-        val texture = assets.getSafe(textureName) ?: Texture.BLANK
+        val texture = engine.asset.getSafe(textureName) ?: Texture.BLANK
 
         // Sets the color and draws the texture
         surface.setDrawColor(color)
