@@ -1,10 +1,9 @@
 package examples
 
-import no.njoh.pulseengine.PulseEngine
-import no.njoh.pulseengine.data.*
-import no.njoh.pulseengine.data.CursorType.*
-import no.njoh.pulseengine.modules.PulseEngineGame
-import no.njoh.pulseengine.modules.graphics.Surface2D
+import no.njoh.pulseengine.core.PulseEngine
+import no.njoh.pulseengine.core.PulseEngineGame
+import no.njoh.pulseengine.core.graphics.Surface2D
+import no.njoh.pulseengine.core.input.*
 
 fun main() = PulseEngine.run(InputExample::class)
 
@@ -17,7 +16,7 @@ class InputExample : PulseEngineGame()
     override fun onCreate()
     {
         // Create new surface for UI
-        engine.gfx.createSurface2D("uiSurface")
+        engine.gfx.createSurface("uiSurface")
     }
 
     override fun onUpdate()
@@ -32,7 +31,7 @@ class InputExample : PulseEngineGame()
 
         // Checks if RIGHT key is down
         if (engine.input.isPressed(Key.RIGHT))
-            engine.gfx.mainCamera.xPos += 100f * engine.data.deltaTime
+            engine.gfx.mainCamera.position.x += 100f * engine.data.deltaTime
 
         // Read clipboard
         if (engine.input.isPressed(Key.LEFT_CONTROL) && engine.input.wasClicked(Key.V))
@@ -47,7 +46,7 @@ class InputExample : PulseEngineGame()
             println("Scroll: ${engine.input.scroll}")
 
         // Set default cursor
-        engine.input.setCursor(ARROW)
+        engine.input.setCursor(CursorType.ARROW)
 
         // Update focus areas
         requestFocusAndUpdateArea(focusAreaOne)
@@ -71,9 +70,9 @@ class InputExample : PulseEngineGame()
                 focusArea.y1 += engine.input.ydMouse
 
                 // Change cursor when mouse is inside and pressed
-                engine.input.setCursor(CROSSHAIR)
+                engine.input.setCursor(CursorType.CROSSHAIR)
             }
-            else engine.input.setCursor(HAND)
+            else engine.input.setCursor(CursorType.HAND)
         }
     }
 
@@ -94,7 +93,7 @@ class InputExample : PulseEngineGame()
         val yw = engine.input.yWorldMouse
 
         // Draw mouse position text to screen
-        val uiSurface = engine.gfx.getSurface2D("uiSurface")
+        val uiSurface = engine.gfx.getSurfaceOrDefault("uiSurface")
         uiSurface.setDrawColor(1f, 1f, 1f, 1f)
         uiSurface.drawText("Mouse position on screen: ($x, $y)", 10f, 30f)
         uiSurface.drawText("Mouse position in world:  ($xw, $yw)", 10f, 60f)

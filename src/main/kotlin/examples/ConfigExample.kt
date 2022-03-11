@@ -1,8 +1,8 @@
 package examples
 
-import no.njoh.pulseengine.PulseEngine
-import no.njoh.pulseengine.modules.PulseEngineGame
-import no.njoh.pulseengine.util.Logger
+import no.njoh.pulseengine.core.PulseEngine
+import no.njoh.pulseengine.core.PulseEngineGame
+import no.njoh.pulseengine.core.shared.utils.Logger
 
 fun main() = PulseEngine.run(ConfigExample::class)
 
@@ -14,7 +14,6 @@ class ConfigExample : PulseEngineGame()
         engine.config.load("examples/config/exampleConfig.cfg")
 
         // General config parameters can be set both in config file and directly in game like below
-        engine.config.creatorName = "StudioName"
         engine.config.gameName = "ConfigExample"
         engine.config.fixedTickRate = 50
         engine.config.targetFps = 120

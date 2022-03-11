@@ -1,13 +1,13 @@
 package examples
 
-import no.njoh.pulseengine.PulseEngine
-import no.njoh.pulseengine.data.Mouse
-import no.njoh.pulseengine.data.assets.Texture
-import no.njoh.pulseengine.modules.PulseEngineGame
-import no.njoh.pulseengine.modules.graphics.BlendFunction
-import no.njoh.pulseengine.modules.graphics.postprocessing.effects.BloomEffect
-import no.njoh.pulseengine.modules.graphics.postprocessing.effects.VignetteEffect
-import no.njoh.pulseengine.util.Camera2DController
+import no.njoh.pulseengine.core.PulseEngine
+import no.njoh.pulseengine.core.PulseEngineGame
+import no.njoh.pulseengine.core.asset.types.Texture
+import no.njoh.pulseengine.core.graphics.api.BlendFunction
+import no.njoh.pulseengine.core.graphics.postprocessing.effects.BloomEffect
+import no.njoh.pulseengine.core.graphics.postprocessing.effects.VignetteEffect
+import no.njoh.pulseengine.core.input.Mouse
+import no.njoh.pulseengine.core.shared.utils.Camera2DController
 
 fun main() = PulseEngine.run(GraphicsExample::class)
 
@@ -28,7 +28,7 @@ class GraphicsExample : PulseEngineGame()
 
         // Create a separate surface to use for UI
         engine.gfx
-            .createSurface2D("uiSurface",1)
+            .createSurface("uiSurface",1)
             .setBackgroundColor(0f, 0f, 0f, 0f)
             .setBlendFunction(BlendFunction.NORMAL)
             .setIsVisible(true)
@@ -61,7 +61,7 @@ class GraphicsExample : PulseEngineGame()
         camSurface.drawLine(300f, 700f, 600f, 700f)
 
         // Draw text to separate UI surface
-        val uiSurface = engine.gfx.getSurface2D("uiSurface")
+        val uiSurface = engine.gfx.getSurfaceOrDefault("uiSurface")
         uiSurface.setDrawColor(1f, 1f, 1f)
         uiSurface.drawText("Stationary HUD text", 10f, 20f, fontSize = 72f)
     }

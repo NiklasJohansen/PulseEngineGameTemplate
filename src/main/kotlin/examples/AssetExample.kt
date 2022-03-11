@@ -1,8 +1,8 @@
 package examples
 
-import no.njoh.pulseengine.PulseEngine
-import no.njoh.pulseengine.data.assets.*
-import no.njoh.pulseengine.modules.PulseEngineGame
+import no.njoh.pulseengine.core.PulseEngine
+import no.njoh.pulseengine.core.PulseEngineGame
+import no.njoh.pulseengine.core.asset.types.*
 
 fun main() = PulseEngine.run(AssetExample::class)
 

@@ -1,8 +1,8 @@
-import no.njoh.pulseengine.PulseEngine
-import no.njoh.pulseengine.modules.PulseEngineGame
-import no.njoh.pulseengine.widgets.CommandLine
-import no.njoh.pulseengine.widgets.Profiler
-import no.njoh.pulseengine.widgets.SceneEditor.SceneEditor
+import no.njoh.pulseengine.core.PulseEngine
+import no.njoh.pulseengine.core.PulseEngineGame
+import no.njoh.pulseengine.widgets.cli.CommandLine
+import no.njoh.pulseengine.widgets.editor.SceneEditor
+import no.njoh.pulseengine.widgets.profiler.Profiler
 
 fun main() = PulseEngine.run(GameTemplate::class)
 

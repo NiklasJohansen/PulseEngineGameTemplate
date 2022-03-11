@@ -1,11 +1,11 @@
 package examples
 
-import no.njoh.pulseengine.PulseEngine
-import no.njoh.pulseengine.data.Key
-import no.njoh.pulseengine.data.Mouse
-import no.njoh.pulseengine.data.assets.Sound
-import no.njoh.pulseengine.modules.PulseEngineGame
-import no.njoh.pulseengine.util.Logger
+import no.njoh.pulseengine.core.PulseEngine
+import no.njoh.pulseengine.core.PulseEngineGame
+import no.njoh.pulseengine.core.asset.types.Sound
+import no.njoh.pulseengine.core.input.Key
+import no.njoh.pulseengine.core.input.Mouse
+import no.njoh.pulseengine.core.shared.utils.Logger
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
