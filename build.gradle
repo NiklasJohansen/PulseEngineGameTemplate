@@ -8,13 +8,13 @@ version '1.0'
 repositories {
     mavenCentral()
     maven {
-        url file("libs")
+        url "https://repo.repsy.io/mvn/njoh/public"
     }
 }
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.6.10"
-    compile 'no.njoh:pulse-engine:0.6.0'
+    compile 'no.njoh:pulse-engine:0.6.3'
 }
 
 compileKotlin {
