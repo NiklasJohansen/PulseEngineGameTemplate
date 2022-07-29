@@ -104,7 +104,8 @@ class SceneExample : PulseEngineGame()
     override fun onDestroy()
     {
         // Save the active scene if it is not running
-        engine.scene.saveIf { it.state == STOPPED }
+        if (engine.scene.state == STOPPED)
+            engine.scene.save()
     }
 }
 
@@ -126,7 +127,7 @@ class ExampleEntity : SceneEntity()
     override fun onRender(engine: PulseEngine, surface: Surface2D)
     {
         // Gets the texture asses or uses the blank texture if it's not found
-        val texture = engine.asset.getSafe(textureName) ?: Texture.BLANK
+        val texture = engine.asset.getOrNull(textureName) ?: Texture.BLANK
 
         // Sets the color and draws the texture
         surface.setDrawColor(color)

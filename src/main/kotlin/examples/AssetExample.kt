@@ -8,7 +8,7 @@ fun main() = PulseEngine.run(AssetExample::class)
 
 class AssetExample : PulseEngineGame()
 {
-    private var frame = 0f
+    private var frameIndex = 0
 
     override fun onCreate()
     {
@@ -39,23 +39,27 @@ class AssetExample : PulseEngineGame()
     override fun onFixedUpdate()
     {
         // Get loaded sound asset
-        val soundAsset = engine.asset.get<Sound>("soundAsset")
+        val soundAsset = engine.asset.getOrNull<Sound>("soundAsset")
 
-        // Create sound source and play it
-        val sourceId = engine.audio.createSource(soundAsset)
-        engine.audio.play(sourceId)
+        // Create sound source and play it if the asset was found
+        if (soundAsset != null)
+        {
+            val sourceId = engine.audio.createSource(soundAsset)
+            engine.audio.play(sourceId)
+        }
 
-        // Increase frame counter
-        frame = (frame + 1) % 6
+        // Increase the current frame index
+        val frameCount = engine.asset.getOrNull<SpriteSheet>("spriteSheetAsset")?.size ?: 0
+        frameIndex = (frameIndex + 1) % frameCount
     }
 
     override fun onRender()
     {
         // Get loaded assets
-        val text = engine.asset.get<Text>("textAsset")
-        val font = engine.asset.get<Font>("fontAsset")
-        val texture = engine.asset.get<Texture>("textureAsset")
-        val spriteSheet = engine.asset.get<SpriteSheet>("spriteSheetAsset")
+        val text = engine.asset.getOrNull<Text>("textAsset") ?: return
+        val font = engine.asset.getOrNull<Font>("fontAsset") ?: return
+        val texture = engine.asset.getOrNull<Texture>("textureAsset") ?: return
+        val spriteSheet = engine.asset.getOrNull<SpriteSheet>("spriteSheetAsset") ?: return
 
         // Draw text with given font
         engine.gfx.mainSurface.drawText(text.text, 200f, 130f, font)
@@ -64,7 +68,7 @@ class AssetExample : PulseEngineGame()
         engine.gfx.mainSurface.drawTexture(texture, 10f, 20f, 250f, 250f)
 
         // Draw texture from sprite sheet
-        engine.gfx.mainSurface.drawTexture(spriteSheet.getTexture(frame.toInt()), 880f, 110f, 60f, 60f)
+        engine.gfx.mainSurface.drawTexture(spriteSheet.getTexture(frameIndex), 880f, 110f, 60f, 60f)
     }
 
     override fun onDestroy() { }

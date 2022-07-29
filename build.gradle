@@ -14,7 +14,7 @@ repositories {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.6.10"
-    compile 'no.njoh:pulse-engine:0.6.3'
+    compile 'no.njoh:pulse-engine:0.7.0'
 }
 
 compileKotlin {

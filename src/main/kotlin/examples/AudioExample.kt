@@ -39,7 +39,7 @@ class AudioExample : PulseEngineGame()
         if (loopingSource == -1)
         {
             // Get sound asset
-            val heartBeat = engine.asset.get<Sound>("heartBeat")
+            val heartBeat = engine.asset.getOrNull<Sound>("heartBeat") ?: throw RuntimeException("Missing asset")
 
             // Create new looping source
             loopingSource = engine.audio.createSource(heartBeat, 2f, true)
@@ -51,7 +51,7 @@ class AudioExample : PulseEngineGame()
         // Create new sound source
         if (engine.input.wasClicked(Mouse.LEFT))
         {
-            val soundAsset = engine.asset.get<Sound>("hollow")
+            val soundAsset = engine.asset.getOrNull<Sound>("hollow") ?: throw RuntimeException("Missing asset")
             val sourceId = engine.audio.createSource(soundAsset)
             engine.audio.setPitch(sourceId,1f)
             engine.audio.setVolume(sourceId, 0.8f)

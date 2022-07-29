@@ -20,7 +20,7 @@ class GraphicsExample : PulseEngineGame()
         // Load texture from disk
         engine.asset.loadTexture("examples/assets/textureAsset.png", "texture")
 
-        // Set background color of default surface and add post processing effects
+        // Set background color of default surface and add post-processing effects
         engine.gfx.mainSurface
             .setBackgroundColor(0.1f, 0.1f, 0.1f)
             .addPostProcessingEffect(BloomEffect(threshold = 0.8f, exposure = 2f))
@@ -43,7 +43,7 @@ class GraphicsExample : PulseEngineGame()
     override fun onRender()
     {
         val camSurface = engine.gfx.mainSurface
-        val texture = engine.asset.get<Texture>("texture")
+        val texture = engine.asset.getOrNull("texture") ?: Texture.BLANK
 
         // Set the draw color to be used for this surface
         camSurface.setDrawColor(0.8f, 0.8f, 1f)
