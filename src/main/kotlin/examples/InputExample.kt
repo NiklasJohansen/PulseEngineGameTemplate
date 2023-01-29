@@ -41,9 +41,9 @@ class InputExample : PulseEngineGame()
         if (engine.input.textInput.isNotBlank())
             println("Text input: ${engine.input.textInput}")
 
-        // Read mouse scroll
-        if (engine.input.scroll != 0)
-            println("Scroll: ${engine.input.scroll}")
+        // Read vertical mouse scroll
+        if (engine.input.yScroll != 0f)
+            println("Scroll: ${engine.input.yScroll}")
 
         // Set default cursor
         engine.input.setCursor(CursorType.ARROW)

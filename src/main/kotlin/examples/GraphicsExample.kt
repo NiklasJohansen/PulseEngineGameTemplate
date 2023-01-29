@@ -23,7 +23,6 @@ class GraphicsExample : PulseEngineGame()
         // Set background color of default surface and add post-processing effects
         engine.gfx.mainSurface
             .setBackgroundColor(0.1f, 0.1f, 0.1f)
-            .addPostProcessingEffect(BloomEffect(threshold = 0.8f, exposure = 2f))
             .addPostProcessingEffect(VignetteEffect())
 
         // Create a separate surface to use for UI

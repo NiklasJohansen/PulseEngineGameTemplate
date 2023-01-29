@@ -28,7 +28,7 @@ class AssetExample : PulseEngineGame()
         engine.asset.loadSound("examples/assets/soundAsset.ogg", "soundAsset")
 
         // Load font and define available font sizes
-        engine.asset.loadFont("examples/assets/fontAsset.ttf", "fontAsset", floatArrayOf(72f))
+        engine.asset.loadFont("examples/assets/fontAsset.ttf", "fontAsset")
 
         // Set tick rate to 1 for this example
         engine.config.fixedTickRate = 1
@@ -62,7 +62,7 @@ class AssetExample : PulseEngineGame()
         val spriteSheet = engine.asset.getOrNull<SpriteSheet>("spriteSheetAsset") ?: return
 
         // Draw text with given font
-        engine.gfx.mainSurface.drawText(text.text, 200f, 130f, font)
+        engine.gfx.mainSurface.drawText(text.text, 200f, 130f, font, 72f)
 
         // Draw texture
         engine.gfx.mainSurface.drawTexture(texture, 10f, 20f, 250f, 250f)

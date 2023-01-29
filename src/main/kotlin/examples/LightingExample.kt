@@ -9,6 +9,8 @@ import no.njoh.pulseengine.core.input.Mouse
 import no.njoh.pulseengine.core.shared.primitives.Color
 import no.njoh.pulseengine.modules.lighting.LightType
 import no.njoh.pulseengine.modules.lighting.LightingSystem
+import no.njoh.pulseengine.modules.lighting.NormalMapRenderer.Orientation.INVERT_X
+import no.njoh.pulseengine.modules.lighting.NormalMapRenderer.Orientation.INVERT_Y
 import no.njoh.pulseengine.modules.lighting.ShadowType
 import no.njoh.pulseengine.modules.lighting.entities.Lamp
 import no.njoh.pulseengine.modules.scene.entities.Backdrop
@@ -42,6 +44,7 @@ class LightingExample : PulseEngineGame()
         backdrop.height = 512f
         backdrop.textureName = "cobblestone_albedo"
         backdrop.normalMapName = "cobblestone_normal"
+        backdrop.normalMapOrientation = INVERT_X
         engine.scene.addEntity(backdrop)
 
         // Create a wall to cast shadows
@@ -51,6 +54,7 @@ class LightingExample : PulseEngineGame()
         wall.height = 100f
         wall.textureName = "crate_albedo"
         wall.normalMapName = "crate_normal"
+        wall.normalMapOrientation = INVERT_Y
         engine.scene.addEntity(wall)
 
         // Create a radial light source
@@ -89,6 +93,7 @@ class LightingExample : PulseEngineGame()
         // Create a lighting system to render all light sources
         val lightingSystem = LightingSystem()
         lightingSystem.ambientColor = Color(0.01f, 0.01f, 0.02f, 0.95f)
+        lightingSystem.dithering = 0.7f
         lightingSystem.textureScale = 1f
         lightingSystem.textureFilter = TextureFilter.LINEAR
         lightingSystem.textureFormat = TextureFormat.HDR_16
@@ -113,7 +118,7 @@ class LightingExample : PulseEngineGame()
             y = if (mousePressed) engine.input.yWorldMouse else sin(angle) * 200f
 
             // Adjust depth of light source with scroll wheel
-            z += engine.input.scroll * 0.05f
+            z += engine.input.yScroll * 0.05f
 
             // Increase rotation angle
             angle += 0.01f

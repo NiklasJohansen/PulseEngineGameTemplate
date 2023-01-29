@@ -7,8 +7,10 @@ import no.njoh.pulseengine.core.graphics.Surface2D
 import no.njoh.pulseengine.core.input.Key
 import no.njoh.pulseengine.core.scene.SceneEntity
 import no.njoh.pulseengine.core.scene.SceneState.*
+import no.njoh.pulseengine.core.shared.annotations.AssetRef
 import no.njoh.pulseengine.core.shared.primitives.Color
 import no.njoh.pulseengine.modules.scene.entities.Camera
+import no.njoh.pulseengine.modules.scene.entities.StandardSceneEntity
 import no.njoh.pulseengine.widgets.editor.SceneEditor
 
 
@@ -112,11 +114,15 @@ class SceneExample : PulseEngineGame()
 /**
  * All scene entities inherits from the [SceneEntity] class
  */
-class ExampleEntity : SceneEntity()
+class ExampleEntity : StandardSceneEntity()
 {
     // Public mutable properties will be adjustable from the SceneEditor UI
+
+    @AssetRef(Texture::class)
     var textureName = "textureAsset"
+
     var color = Color(1f, 1f, 1f)
+
     var speed = 1f
 
     override fun onFixedUpdate(engine: PulseEngine)

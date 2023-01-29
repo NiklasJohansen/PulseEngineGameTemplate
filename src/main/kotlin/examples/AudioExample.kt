@@ -5,6 +5,7 @@ import no.njoh.pulseengine.core.PulseEngineGame
 import no.njoh.pulseengine.core.asset.types.Sound
 import no.njoh.pulseengine.core.input.Key
 import no.njoh.pulseengine.core.input.Mouse
+import no.njoh.pulseengine.core.shared.primitives.Color
 import no.njoh.pulseengine.core.shared.utils.Logger
 import kotlin.math.PI
 import kotlin.math.cos
@@ -42,7 +43,7 @@ class AudioExample : PulseEngineGame()
             val heartBeat = engine.asset.getOrNull<Sound>("heartBeat") ?: throw RuntimeException("Missing asset")
 
             // Create new looping source
-            loopingSource = engine.audio.createSource(heartBeat, 2f, true)
+            loopingSource = engine.audio.createSource(heartBeat, volume = 2f, looping = true)
 
             // Play looping source
             engine.audio.play(loopingSource)
@@ -74,7 +75,7 @@ class AudioExample : PulseEngineGame()
 
         // Loop through sources and update position
         engine.audio.getSources().forEach { sourceId ->
-            engine.audio.setPosition(sourceId, cos(angle) * 10,sin(angle) * 10)
+            engine.audio.setPosition(sourceId, x = cos(angle) * 10f, y = sin(angle) * 10f)
         }
     }
 
@@ -91,7 +92,7 @@ class AudioExample : PulseEngineGame()
         // Render origin position of sound
         val xCenter = engine.window.width / 2f
         val yCenter = engine.window.height / 2f
-        engine.gfx.mainSurface.setDrawColor(1f,1f, 1f)
+        engine.gfx.mainSurface.setDrawColor(Color.WHITE)
         engine.gfx.mainSurface.drawQuad(xCenter + cos(angle) * xCenter, yCenter, 10f, 10f)
 
         // Render number of sources
