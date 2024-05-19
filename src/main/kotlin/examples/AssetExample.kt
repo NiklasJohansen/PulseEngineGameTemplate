@@ -13,22 +13,27 @@ class AssetExample : PulseEngineGame()
     override fun onCreate()
     {
         // Load plane text
-        engine.asset.loadText("examples/assets/textAsset.txt", "textAsset")
+        engine.asset.loadText(fileName = "examples/assets/textAsset.txt", assetName = "text")
 
         // Load texture
-        engine.asset.loadTexture("examples/assets/textureAsset.png", "textureAsset")
+        engine.asset.loadTexture(fileName = "examples/assets/textureAsset.png", assetName = "texture")
 
         // Load all textures in folder
-        engine.asset.loadAllTextures("examples/assets/")
+        engine.asset.loadAllTextures(directory = "examples/assets/")
 
         // Load sprite sheet and define cell count
-        engine.asset.loadSpriteSheet("examples/assets/spriteSheetAsset.png", "spriteSheetAsset", 6, 1)
+        engine.asset.loadSpriteSheet(
+            fileName = "examples/assets/spriteSheetAsset.png",
+            assetName = "spriteSheet",
+            horizontalCells = 6,
+            verticalCells = 1
+        )
 
         // Load sound
-        engine.asset.loadSound("examples/assets/soundAsset.ogg", "soundAsset")
+        engine.asset.loadSound(fileName = "examples/assets/soundAsset.ogg", assetName = "sound")
 
         // Load font and define available font sizes
-        engine.asset.loadFont("examples/assets/fontAsset.ttf", "fontAsset")
+        engine.asset.loadFont(fileName = "examples/assets/fontAsset.ttf", assetName = "font")
 
         // Set tick rate to 1 for this example
         engine.config.fixedTickRate = 1
@@ -39,27 +44,24 @@ class AssetExample : PulseEngineGame()
     override fun onFixedUpdate()
     {
         // Get loaded sound asset
-        val soundAsset = engine.asset.getOrNull<Sound>("soundAsset")
+        val soundAsset = engine.asset.getOrNull<Sound>("sound")
 
         // Create sound source and play it if the asset was found
         if (soundAsset != null)
-        {
-            val sourceId = engine.audio.createSource(soundAsset)
-            engine.audio.play(sourceId)
-        }
+            engine.audio.playSound(soundAsset)
 
         // Increase the current frame index
-        val frameCount = engine.asset.getOrNull<SpriteSheet>("spriteSheetAsset")?.size ?: 0
+        val frameCount = engine.asset.getOrNull<SpriteSheet>("spriteSheet")?.size ?: 1
         frameIndex = (frameIndex + 1) % frameCount
     }
 
     override fun onRender()
     {
         // Get loaded assets
-        val text = engine.asset.getOrNull<Text>("textAsset") ?: return
-        val font = engine.asset.getOrNull<Font>("fontAsset") ?: return
-        val texture = engine.asset.getOrNull<Texture>("textureAsset") ?: return
-        val spriteSheet = engine.asset.getOrNull<SpriteSheet>("spriteSheetAsset") ?: return
+        val text = engine.asset.getOrNull<Text>("text") ?: return
+        val font = engine.asset.getOrNull<Font>("font") ?: return
+        val texture = engine.asset.getOrNull<Texture>("texture") ?: return
+        val spriteSheet = engine.asset.getOrNull<SpriteSheet>("spriteSheet") ?: return
 
         // Draw text with given font
         engine.gfx.mainSurface.drawText(text.text, 200f, 130f, font, 72f)

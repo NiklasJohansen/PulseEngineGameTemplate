@@ -10,13 +10,12 @@ class GameTemplate : PulseEngineGame()
 {
     override fun onCreate()
     {
-        engine.widget.add(CommandLine(), Profiler(), SceneEditor())
+        engine.widget.add(CommandLine(), SceneEditor(), Profiler())
     }
 
-    override fun onUpdate()
-    {
+    override fun onFixedUpdate() { }
 
-    }
+    override fun onUpdate() { }
 
     override fun onRender()
     {
@@ -25,12 +24,10 @@ class GameTemplate : PulseEngineGame()
             x = engine.window.width / 2f,
             y = engine.window.height / 2f,
             fontSize = 72f,
-            xOrigin = 0.5f
+            xOrigin = 0.5f,
+            yOrigin = 0.5f
         )
     }
 
-    override fun onDestroy()
-    {
-
-    }
+    override fun onDestroy() { }
 }

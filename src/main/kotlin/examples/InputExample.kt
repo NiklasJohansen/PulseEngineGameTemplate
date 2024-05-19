@@ -2,7 +2,7 @@ package examples
 
 import no.njoh.pulseengine.core.PulseEngine
 import no.njoh.pulseengine.core.PulseEngineGame
-import no.njoh.pulseengine.core.graphics.Surface2D
+import no.njoh.pulseengine.core.graphics.surface.Surface
 import no.njoh.pulseengine.core.input.*
 
 fun main() = PulseEngine.run(InputExample::class)
@@ -35,7 +35,7 @@ class InputExample : PulseEngineGame()
 
         // Read clipboard
         if (engine.input.isPressed(Key.LEFT_CONTROL) && engine.input.wasClicked(Key.V))
-            println(engine.input.getClipboard())
+            engine.input.getClipboard { content -> println(content) }
 
         // Read text input
         if (engine.input.textInput.isNotBlank())
@@ -46,7 +46,7 @@ class InputExample : PulseEngineGame()
             println("Scroll: ${engine.input.yScroll}")
 
         // Set default cursor
-        engine.input.setCursor(CursorType.ARROW)
+        engine.input.setCursorType(CursorType.ARROW)
 
         // Update focus areas
         requestFocusAndUpdateArea(focusAreaOne)
@@ -61,7 +61,7 @@ class InputExample : PulseEngineGame()
         // If mouse is inside both area one and two, only area two will get focus as it is last to request it
         if (focusArea.isInside(engine.input.xMouse, engine.input.yMouse))
         {
-            if (engine.input.isPressed(Mouse.LEFT))
+            if (engine.input.isPressed(MouseButton.LEFT))
             {
                 // Move area by adding delta value of mouse position
                 focusArea.x0 += engine.input.xdMouse
@@ -70,9 +70,9 @@ class InputExample : PulseEngineGame()
                 focusArea.y1 += engine.input.ydMouse
 
                 // Change cursor when mouse is inside and pressed
-                engine.input.setCursor(CursorType.CROSSHAIR)
+                engine.input.setCursorType(CursorType.CROSSHAIR)
             }
-            else engine.input.setCursor(CursorType.HAND)
+            else engine.input.setCursorType(CursorType.HAND)
         }
     }
 
@@ -100,8 +100,8 @@ class InputExample : PulseEngineGame()
 
         // Gamepad input
         engine.input.gamepads.forEachIndexed { i, gamepad ->
-            val xLeft = gamepad.getAxis(Axis.LEFT_X)
-            val yLeft = gamepad.getAxis(Axis.LEFT_Y)
+            val xLeft = gamepad.getAxis(GamepadAxis.LEFT_X)
+            val yLeft = gamepad.getAxis(GamepadAxis.LEFT_Y)
             uiSurface.drawText("Gamepad (${gamepad.id}) left joystick: ($xLeft, $yLeft)", 10f, 90f + i * 30)
         }
 
@@ -116,7 +116,7 @@ class InputExample : PulseEngineGame()
         focusAreaTwo.draw(uiSurface)
     }
 
-    private fun FocusArea.draw(surface: Surface2D) =
+    private fun FocusArea.draw(surface: Surface) =
         surface.drawQuad(x0, y0, x1 - x0, y1 - y0)
 
     override fun onDestroy() { }

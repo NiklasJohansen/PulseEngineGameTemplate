@@ -13,16 +13,11 @@ class DataExample : PulseEngineGame()
 
     override fun onCreate()
     {
-        // Runtime stats
+        // Runtime stats are found in the data module, e.g. current FPS
         val fps = engine.data.currentFps
-        val renderTime = engine.data.renderTimeMs
-        val updateTime = engine.data.updateTimeMS
-        val fixedUpdateTime = engine.data.fixedUpdateTimeMS
-        val totalMemory = engine.data.totalMemory
-        val usedMemory = engine.data.usedMemory
 
         // Metrics will be graphed by the Profiler widget (above stats are graphed by default)
-        engine.data.addMetric("Position", "px") { currentPosition }
+        engine.data.addMetric("Position (px)") { sample(currentPosition) }
 
         // Load game state from internal class path
         val internalState = engine.data.loadObject<GameState>("examples/data/internalGameState.dat", fromClassPath = true)

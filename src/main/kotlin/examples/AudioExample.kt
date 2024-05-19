@@ -4,7 +4,7 @@ import no.njoh.pulseengine.core.PulseEngine
 import no.njoh.pulseengine.core.PulseEngineGame
 import no.njoh.pulseengine.core.asset.types.Sound
 import no.njoh.pulseengine.core.input.Key
-import no.njoh.pulseengine.core.input.Mouse
+import no.njoh.pulseengine.core.input.MouseButton
 import no.njoh.pulseengine.core.shared.primitives.Color
 import no.njoh.pulseengine.core.shared.utils.Logger
 import kotlin.math.PI
@@ -46,36 +46,40 @@ class AudioExample : PulseEngineGame()
             loopingSource = engine.audio.createSource(heartBeat, volume = 2f, looping = true)
 
             // Play looping source
-            engine.audio.play(loopingSource)
+            engine.audio.playSource(loopingSource)
         }
 
         // Create new sound source
-        if (engine.input.wasClicked(Mouse.LEFT))
+        if (engine.input.wasClicked(MouseButton.LEFT))
         {
             val soundAsset = engine.asset.getOrNull<Sound>("hollow") ?: throw RuntimeException("Missing asset")
             val sourceId = engine.audio.createSource(soundAsset)
-            engine.audio.setPitch(sourceId,1f)
-            engine.audio.setVolume(sourceId, 0.8f)
-            engine.audio.setLooping(sourceId, false)
-            engine.audio.setPosition(sourceId, 0f, 0f)
-            engine.audio.play(sourceId)
+            engine.audio.setSourcePitch(sourceId, 1f)
+            engine.audio.setSourceVolume(sourceId, 0.8f)
+            engine.audio.setSourceLooping(sourceId, false)
+            engine.audio.setSourcePosition(sourceId, 0f, 0f)
+            engine.audio.playSource(sourceId)
         }
+
+        // Play sound asset directly by name
+        if (engine.input.wasClicked(MouseButton.RIGHT))
+            engine.audio.playSound("hollow")
 
         // Play looping sound
         if (engine.input.wasClicked(Key.S))
-            engine.audio.play(loopingSource)
+            engine.audio.playSource(loopingSource)
 
         // Pause looping sound
         if (engine.input.wasClicked(Key.P))
-            engine.audio.pause(loopingSource)
+            engine.audio.pauseSource(loopingSource)
 
         // Stop all audio sources
         if (engine.input.wasClicked(Key.BACKSPACE))
-            engine.audio.stopAll()
+            engine.audio.stopAllSources()
 
         // Loop through sources and update position
         engine.audio.getSources().forEach { sourceId ->
-            engine.audio.setPosition(sourceId, x = cos(angle) * 10f, y = sin(angle) * 10f)
+            engine.audio.setSourcePosition(sourceId, x = cos(angle) * 10f, y = sin(angle) * 10f)
         }
     }
 

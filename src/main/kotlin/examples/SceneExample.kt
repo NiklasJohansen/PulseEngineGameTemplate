@@ -3,7 +3,7 @@ package examples
 import no.njoh.pulseengine.core.PulseEngine
 import no.njoh.pulseengine.core.PulseEngineGame
 import no.njoh.pulseengine.core.asset.types.Texture
-import no.njoh.pulseengine.core.graphics.Surface2D
+import no.njoh.pulseengine.core.graphics.surface.Surface
 import no.njoh.pulseengine.core.input.Key
 import no.njoh.pulseengine.core.scene.SceneEntity
 import no.njoh.pulseengine.core.scene.SceneState.*
@@ -130,7 +130,7 @@ class ExampleEntity : StandardSceneEntity()
         x += speed
     }
 
-    override fun onRender(engine: PulseEngine, surface: Surface2D)
+    override fun onRender(engine: PulseEngine, surface: Surface)
     {
         // Gets the texture asses or uses the blank texture if it's not found
         val texture = engine.asset.getOrNull(textureName) ?: Texture.BLANK

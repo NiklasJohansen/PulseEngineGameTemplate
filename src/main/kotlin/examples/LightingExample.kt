@@ -5,7 +5,7 @@ import no.njoh.pulseengine.core.PulseEngineGame
 import no.njoh.pulseengine.core.graphics.api.Multisampling
 import no.njoh.pulseengine.core.graphics.api.TextureFilter
 import no.njoh.pulseengine.core.graphics.api.TextureFormat
-import no.njoh.pulseengine.core.input.Mouse
+import no.njoh.pulseengine.core.input.MouseButton
 import no.njoh.pulseengine.core.shared.primitives.Color
 import no.njoh.pulseengine.modules.lighting.LightType
 import no.njoh.pulseengine.modules.lighting.LightingSystem
@@ -96,7 +96,7 @@ class LightingExample : PulseEngineGame()
         lightingSystem.dithering = 0.7f
         lightingSystem.textureScale = 1f
         lightingSystem.textureFilter = TextureFilter.LINEAR
-        lightingSystem.textureFormat = TextureFormat.HDR_16
+        lightingSystem.textureFormat = TextureFormat.RGBA16F
         lightingSystem.multisampling = Multisampling.NONE
         lightingSystem.enableFXAA = false
         lightingSystem.useNormalMap = true
@@ -113,7 +113,7 @@ class LightingExample : PulseEngineGame()
         engine.scene.getFirstEntityOfType<Lamp>()?.apply()
         {
             // Set xy position of light source
-            val mousePressed = engine.input.isPressed(Mouse.LEFT)
+            val mousePressed = engine.input.isPressed(MouseButton.LEFT)
             x = if (mousePressed) engine.input.xWorldMouse else cos(angle) * 200f
             y = if (mousePressed) engine.input.yWorldMouse else sin(angle) * 200f
 

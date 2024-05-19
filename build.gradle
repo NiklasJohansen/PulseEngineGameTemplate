@@ -1,5 +1,6 @@
 plugins {
-    id 'org.jetbrains.kotlin.jvm' version '1.6.10'
+    id 'org.jetbrains.kotlin.jvm' version '1.9.23'
+    id 'edu.sc.seis.launch4j' version '3.0.5'
 }
 
 group 'org.example'
@@ -8,28 +9,48 @@ version '1.0'
 repositories {
     mavenCentral()
     maven {
-        url "https://repo.repsy.io/mvn/njoh/public"
+        url 'https://repo.repsy.io/mvn/njoh/public'
     }
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.6.10"
-    compile 'no.njoh:pulse-engine:0.8.0'
+    implementation 'no.njoh:pulse-engine:0.9.0'
 }
 
-compileKotlin {
-    kotlinOptions.jvmTarget = "1.8"
+kotlin {
+    jvmToolchain(19)
 }
 
-compileTestKotlin {
-    kotlinOptions.jvmTarget = "1.8"
-}
+////////////////////////////////////////////////////////////////////////////////// Windows release
+
+String releaseName     = "$name-$version"
+String releaseBuildDir = "$buildDir/$releaseName"
+String mainClass       = 'GameTemplateKt'
 
 jar {
-    manifest {
-        attributes('Main-Class': 'GameTemplateKt')
+    duplicatesStrategy DuplicatesStrategy.INCLUDE
+    from configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    exclude 'macos/**', 'linux/**' // Exclude natives for Mac and Linux when creating Windows exe
+    manifest { attributes('Main-Class': mainClass) }
+}
+
+launch4j {
+    bundledJrePath = 'jre'
+    mainClassName  = mainClass
+    outputDir      = releaseBuildDir
+}
+
+task buildWin64Release(type: Zip) {
+    group 'release'
+    dependsOn 'createExe'
+    doFirst {
+        delete "$releaseBuildDir/lib"
+        copy {
+            from zipTree('jre/jre19-win64.zip')
+            into "$releaseBuildDir/jre"
+        }
     }
-    from {
-        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
-    }
+    from releaseBuildDir
+    destinationDir file('release/win64')
+    archiveName "${releaseName}.zip"
 }
