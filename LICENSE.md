@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2020 Niklas Johansen - https://github.com/NiklasJohansen
+Copyright (c) 2025 Niklas Johansen - https://github.com/NiklasJohansen
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

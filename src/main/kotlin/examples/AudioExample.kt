@@ -21,18 +21,18 @@ class AudioExample : PulseEngineGame()
     override fun onCreate()
     {
         // Get all available device names
-        engine.audio.getOutputDevices().forEach { Logger.info("Sound device: $it") }
+        engine.audio.getOutputDevices().forEach { Logger.info { "Sound device: $it" } }
 
         // Get name of default output device
         val defaultOutputDevice = engine.audio.getDefaultOutputDevice()
-        Logger.info("Default output device: $defaultOutputDevice")
+        Logger.info { "Default output device: $defaultOutputDevice" }
 
         // Set output device
         engine.audio.setOutputDevice(defaultOutputDevice)
 
         // Load sound assets
-        engine.asset.loadSound("examples/assets/hollow.ogg", "hollow")
-        engine.asset.loadSound("examples/assets/soundAsset.ogg", "heartBeat")
+        engine.asset.load(Sound("examples/assets/hollow.ogg", "hollow"))
+        engine.asset.load(Sound("examples/assets/sound_asset.ogg", "heart_beat"))
     }
 
     override fun onUpdate()
@@ -40,7 +40,7 @@ class AudioExample : PulseEngineGame()
         if (loopingSource == -1)
         {
             // Get sound asset
-            val heartBeat = engine.asset.getOrNull<Sound>("heartBeat") ?: throw RuntimeException("Missing asset")
+            val heartBeat = engine.asset.getOrNull<Sound>("heart_beat") ?: throw RuntimeException("Missing asset")
 
             // Create new looping source
             loopingSource = engine.audio.createSource(heartBeat, volume = 2f, looping = true)

@@ -24,7 +24,7 @@ class SceneExample : PulseEngineGame()
         engine.widget.add(SceneEditor())
 
         // Loads a scene asset to use from the editor
-        engine.asset.loadTexture("examples/assets/textureAsset.png", "textureAsset")
+        engine.asset.load(Texture("examples/assets/texture_asset.png", "texture_asset"))
 
         // Checks if a scene file already exist
         if (engine.data.exists("example.scn"))
@@ -119,7 +119,7 @@ class ExampleEntity : StandardSceneEntity()
     // Public mutable properties will be adjustable from the SceneEditor UI
 
     @AssetRef(Texture::class)
-    var textureName = "textureAsset"
+    var textureName = "texture_asset"
 
     var color = Color(1f, 1f, 1f)
 

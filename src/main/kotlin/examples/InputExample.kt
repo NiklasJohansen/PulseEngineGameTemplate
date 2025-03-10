@@ -4,6 +4,7 @@ import no.njoh.pulseengine.core.PulseEngine
 import no.njoh.pulseengine.core.PulseEngineGame
 import no.njoh.pulseengine.core.graphics.surface.Surface
 import no.njoh.pulseengine.core.input.*
+import no.njoh.pulseengine.core.shared.primitives.Color
 
 fun main() = PulseEngine.run(InputExample::class)
 
@@ -16,7 +17,7 @@ class InputExample : PulseEngineGame()
     override fun onCreate()
     {
         // Create new surface for UI
-        engine.gfx.createSurface("uiSurface")
+        engine.gfx.createSurface("ui_surface")
     }
 
     override fun onUpdate()
@@ -93,8 +94,8 @@ class InputExample : PulseEngineGame()
         val yw = engine.input.yWorldMouse
 
         // Draw mouse position text to screen
-        val uiSurface = engine.gfx.getSurfaceOrDefault("uiSurface")
-        uiSurface.setDrawColor(1f, 1f, 1f, 1f)
+        val uiSurface = engine.gfx.getSurfaceOrDefault("ui_surface")
+        uiSurface.setDrawColor(Color.WHITE)
         uiSurface.drawText("Mouse position on screen: ($x, $y)", 10f, 30f)
         uiSurface.drawText("Mouse position in world:  ($xw, $yw)", 10f, 60f)
 
