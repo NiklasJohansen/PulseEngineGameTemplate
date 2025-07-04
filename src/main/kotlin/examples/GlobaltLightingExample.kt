@@ -13,6 +13,7 @@ import no.njoh.pulseengine.core.shared.primitives.Color
 import no.njoh.pulseengine.modules.lighting.direct.DirectLightType.*
 import no.njoh.pulseengine.modules.lighting.direct.DirectLightingSystem
 import no.njoh.pulseengine.modules.lighting.direct.DirectShadowType.*
+import no.njoh.pulseengine.modules.lighting.global.GlobalIlluminationSystem
 import no.njoh.pulseengine.modules.lighting.shared.NormalMapRenderer.Orientation.*
 import no.njoh.pulseengine.modules.scene.entities.Backdrop
 import no.njoh.pulseengine.modules.scene.entities.Camera
@@ -21,9 +22,9 @@ import no.njoh.pulseengine.modules.scene.entities.Wall
 import kotlin.math.cos
 import kotlin.math.sin
 
-fun main() = PulseEngine.run(DirectLightingExample::class)
+fun main() = PulseEngine.run(GlobalLightingExample::class)
 
-class DirectLightingExample : PulseEngineGame()
+class GlobalLightingExample : PulseEngineGame()
 {
     // Angle used for light positioning
     private var angle = 0f
@@ -49,7 +50,6 @@ class DirectLightingExample : PulseEngineGame()
         backdrop.textureName = "cobblestone_albedo"
         backdrop.normalMapName = "cobblestone_normal"
         backdrop.normalMapOrientation = NORMAL
-        backdrop.normalMapIntensity = 0.4f
         engine.scene.addEntity(backdrop)
 
         // Create a wall to cast shadows
@@ -63,31 +63,23 @@ class DirectLightingExample : PulseEngineGame()
         engine.scene.addEntity(wall)
 
         // Create a radial light source
-        val radialLamp = Lamp()
-        radialLamp.y = 200f
-        radialLamp.z = -0.3f
-        radialLamp.lightColor = Color(1f, 0.72f, 0.55f)
-        radialLamp.intensity = 3f
-        radialLamp.radius = 800f
-        radialLamp.size = 50f
-        radialLamp.coneAngle = 360f
-        radialLamp.spill = 0.95f
-        radialLamp.type = RADIAL
-        radialLamp.shadowType = SOFT
-        engine.scene.addEntity(radialLamp)
+        val movingLight = Lamp()
+        movingLight.y = 200f
+        movingLight.width = 25f
+        movingLight.height = 25f
+        movingLight.lightColor = Color(1f, 0.72f, 0.55f)
+        movingLight.intensity = 10f
+        movingLight.coneAngle = 360f
+        engine.scene.addEntity(movingLight)
 
         // Create a linear light source
-        val linearLamp = Lamp()
-        linearLamp.y = -230f
-        linearLamp.z = -0.1f
-        linearLamp.lightColor = Color(144, 172, 247)
-        linearLamp.intensity = 3.7f
-        linearLamp.radius = 1000f
-        linearLamp.size = 110f
-        linearLamp.spill = 0.95f
-        linearLamp.type = LINEAR
-        linearLamp.shadowType = SOFT
-        engine.scene.addEntity(linearLamp)
+        val staticLight = Lamp()
+        staticLight.y = -230f
+        staticLight.width = 200f
+        staticLight.height = 5f
+        staticLight.lightColor = Color(144, 172, 247)
+        staticLight.intensity = 6f
+        engine.scene.addEntity(staticLight)
 
         // Create a camera to better view the scene
         val camera = Camera()
@@ -95,22 +87,16 @@ class DirectLightingExample : PulseEngineGame()
         camera.viewPortHeight = engine.window.height.toFloat()
         engine.scene.addEntity(camera)
 
-        // Create a lighting system to render all light sources
-        val lightingSystem = DirectLightingSystem()
-        lightingSystem.ambientColor = Color(0.05f, 0.05f, 0.07f, 0.95f)
-        lightingSystem.dithering = 0.7f
-        lightingSystem.textureScale = 1f
-        lightingSystem.textureFilter = TextureFilter.LINEAR
-        lightingSystem.textureFormat = RGBA16F
-        lightingSystem.multisampling = Multisampling.NONE
-        lightingSystem.enableFXAA = false
-        lightingSystem.useNormalMap = true
-        lightingSystem.enableLightSpill = true
+        // Create a lighting system to render all light sources (with default settings)
+        val lightingSystem = GlobalIlluminationSystem()
+        lightingSystem.lightTexScale = 0.8f // 80% of the screen size, decrease to increase performance
+        lightingSystem.localSceneTexScale = 0.8f
+        lightingSystem.normalMapScale = 5f
         engine.scene.addSystem(lightingSystem)
 
         // Add Color Grading and bloom effect
         engine.gfx.mainSurface.addPostProcessingEffect(ColorGradingEffect())
-        engine.gfx.mainSurface.addPostProcessingEffect(BloomEffect().apply { intensity=1.2f; radius=0f; threshold=1f; })
+        engine.gfx.mainSurface.addPostProcessingEffect(BloomEffect().apply { intensity=1.2f; radius=0f; threshold=2f; })
 
         // Start the scene
         engine.scene.start()
@@ -125,9 +111,6 @@ class DirectLightingExample : PulseEngineGame()
             val mousePressed = engine.input.isPressed(MouseButton.LEFT)
             x = if (mousePressed) engine.input.xWorldMouse else cos(angle) * 200f
             y = if (mousePressed) engine.input.yWorldMouse else sin(angle) * 200f
-
-            // Adjust depth of light source with scroll wheel
-            z += engine.input.yScroll * 0.05f
 
             // Increase rotation angle
             angle += 0.01f
