@@ -4,7 +4,7 @@ import no.njoh.pulseengine.core.PulseEngine
 import no.njoh.pulseengine.core.PulseEngineGame
 import no.njoh.pulseengine.core.asset.types.*
 
-fun main() = PulseEngine.run(AssetExample::class)
+fun main() = PulseEngine.run<AssetExample>()
 
 class AssetExample : PulseEngineGame()
 {
@@ -18,10 +18,10 @@ class AssetExample : PulseEngineGame()
         // Load texture
         engine.asset.load(Texture(filePath = "examples/assets/texture_asset.png", name = "texture"))
 
-        // Load all assets in folder
+        // Load all assets in the folder
         engine.asset.loadAll(directory = "examples/assets/")
 
-        // Load sprite sheet and define cell count
+        // Load the sprite sheet and define the cell count
         engine.asset.load(SpriteSheet(
             filePath = "examples/assets/sprite_sheet_asset.png",
             name = "sprite_sheet",
@@ -36,17 +36,15 @@ class AssetExample : PulseEngineGame()
         engine.asset.load(Font(filePath = "examples/assets/font_asset.ttf", name = "font"))
 
         // Set tick rate to 1 for this example
-        engine.config.fixedTickRate = 1
+        engine.config.fixedTickRate = 1f
     }
-
-    override fun onUpdate() { }
 
     override fun onFixedUpdate()
     {
         // Get loaded sound asset
         val soundAsset = engine.asset.getOrNull<Sound>("sound")
 
-        // Create sound source and play it if the asset was found
+        // Create the sound source and play it if the asset was found
         if (soundAsset != null)
             engine.audio.playSound(soundAsset)
 
@@ -63,15 +61,13 @@ class AssetExample : PulseEngineGame()
         val texture = engine.asset.getOrNull<Texture>("texture") ?: return
         val spriteSheet = engine.asset.getOrNull<SpriteSheet>("sprite_sheet") ?: return
 
-        // Draw text with given font
+        // Draw text with the given font
         engine.gfx.mainSurface.drawText(text.text, 200f, 130f, font, 72f)
 
         // Draw texture
         engine.gfx.mainSurface.drawTexture(texture, 10f, 20f, 250f, 250f)
 
-        // Draw texture from sprite sheet
+        // Draw texture from the sprite sheet
         engine.gfx.mainSurface.drawTexture(spriteSheet.getTexture(frameIndex), 880f, 110f, 60f, 60f)
     }
-
-    override fun onDestroy() { }
 }

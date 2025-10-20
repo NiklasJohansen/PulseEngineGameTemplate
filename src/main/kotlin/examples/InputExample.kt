@@ -6,7 +6,7 @@ import no.njoh.pulseengine.core.graphics.surface.Surface
 import no.njoh.pulseengine.core.input.*
 import no.njoh.pulseengine.core.shared.primitives.Color
 
-fun main() = PulseEngine.run(InputExample::class)
+fun main() = PulseEngine.run<InputExample>()
 
 class InputExample : PulseEngineGame()
 {
@@ -16,21 +16,21 @@ class InputExample : PulseEngineGame()
 
     override fun onCreate()
     {
-        // Create new surface for UI
+        // Create a new surface for UI
         engine.gfx.createSurface("ui_surface")
     }
 
     override fun onUpdate()
     {
-        // Checks if SPACE key was clicked once
+        // Checks if the SPACE key was clicked once
         if (engine.input.wasClicked(Key.SPACE))
             println("SPACE clicked")
 
-        // Checks if SPACE key was released once
+        // Checks if the SPACE key was released once
         if (engine.input.wasReleased(Key.SPACE))
             println("SPACE released")
 
-        // Checks if RIGHT key is down
+        // Checks if the RIGHT key is down
         if (engine.input.isPressed(Key.RIGHT))
             engine.gfx.mainCamera.position.x += 100f * engine.data.deltaTime
 
@@ -59,7 +59,7 @@ class InputExample : PulseEngineGame()
         // Request focus for this area
         engine.input.requestFocus(focusArea)
 
-        // If mouse is inside both area one and two, only area two will get focus as it is last to request it
+        // If the mouse is inside both area one and two, only area two will get focus as it is last to request it
         if (focusArea.isInside(engine.input.xMouse, engine.input.yMouse))
         {
             if (engine.input.isPressed(MouseButton.LEFT))
@@ -79,17 +79,17 @@ class InputExample : PulseEngineGame()
 
     override fun onRender()
     {
-        // Draw rect on main surface (world space)
+        // Draw rect on the main surface (world space)
         engine.gfx.mainSurface.setDrawColor(0.08f, 0.08f, 0.08f, 1f)
         engine.gfx.mainSurface.drawQuad(500f, 500f, 200f, 200f)
         engine.gfx.mainSurface.setDrawColor(1f, 1f, 1f)
         engine.gfx.mainSurface.drawText("Pos: (500, 500)", 505f, 520f)
 
-        // Get on-screen mouse position
+        // Get the on-screen mouse position
         val x = engine.input.xMouse
         val y = engine.input.yMouse
 
-        // Get mouse position relative to the main camera (world space)
+        // Get the mouse position relative to the main camera (world space)
         val xw = engine.input.xWorldMouse
         val yw = engine.input.yWorldMouse
 
@@ -117,8 +117,5 @@ class InputExample : PulseEngineGame()
         focusAreaTwo.draw(uiSurface)
     }
 
-    private fun FocusArea.draw(surface: Surface) =
-        surface.drawQuad(x0, y0, x1 - x0, y1 - y0)
-
-    override fun onDestroy() { }
+    private fun FocusArea.draw(surface: Surface) = surface.drawQuad(x0, y0, x1 - x0, y1 - y0)
 }

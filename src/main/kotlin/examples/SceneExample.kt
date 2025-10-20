@@ -9,19 +9,18 @@ import no.njoh.pulseengine.core.scene.SceneEntity
 import no.njoh.pulseengine.core.scene.SceneState.*
 import no.njoh.pulseengine.core.shared.annotations.AssetRef
 import no.njoh.pulseengine.core.shared.primitives.Color
+import no.njoh.pulseengine.modules.editor.SceneEditor
 import no.njoh.pulseengine.modules.scene.entities.Camera
-import no.njoh.pulseengine.modules.scene.entities.StandardSceneEntity
-import no.njoh.pulseengine.widgets.editor.SceneEditor
+import no.njoh.pulseengine.modules.scene.entities.CommonSceneEntity
 
-
-fun main() = PulseEngine.run(SceneExample::class)
+fun main() = PulseEngine.run<SceneExample>()
 
 class SceneExample : PulseEngineGame()
 {
     override fun onCreate()
     {
         // Adds the SceneEditor widget (default open key: F2)
-        engine.widget.add(SceneEditor())
+        engine.service.add(SceneEditor())
 
         // Loads a scene asset to use from the editor
         engine.asset.load(Texture("examples/assets/texture_asset.png", "texture_asset"))
@@ -114,9 +113,9 @@ class SceneExample : PulseEngineGame()
 /**
  * All scene entities inherits from the [SceneEntity] class
  */
-class ExampleEntity : StandardSceneEntity()
+class ExampleEntity : CommonSceneEntity()
 {
-    // Public mutable properties will be adjustable from the SceneEditor UI
+    // Public mutable properties will be editable from the SceneEditor
 
     @AssetRef(Texture::class)
     var textureName = "texture_asset"

@@ -11,7 +11,7 @@ import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
 
-fun main() = PulseEngine.run(AudioExample::class)
+fun main() = PulseEngine.run<AudioExample>()
 
 class AudioExample : PulseEngineGame()
 {
@@ -102,6 +102,4 @@ class AudioExample : PulseEngineGame()
         // Render number of sources
         engine.gfx.mainSurface.drawText("Active sound sources:  ${engine.audio.getSources().size}", 20f, 30f)
     }
-
-    override fun onDestroy() { }
 }

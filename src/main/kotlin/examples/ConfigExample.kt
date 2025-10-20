@@ -4,7 +4,7 @@ import no.njoh.pulseengine.core.PulseEngine
 import no.njoh.pulseengine.core.PulseEngineGame
 import no.njoh.pulseengine.core.shared.utils.Logger
 
-fun main() = PulseEngine.run(ConfigExample::class)
+fun main() = PulseEngine.run<ConfigExample>()
 
 class ConfigExample : PulseEngineGame()
 {
@@ -15,17 +15,11 @@ class ConfigExample : PulseEngineGame()
 
         // General config parameters can be set both in config file and directly in game like below
         engine.config.gameName = "ConfigExample"
-        engine.config.fixedTickRate = 50
+        engine.config.fixedTickRate = 50f
         engine.config.targetFps = 120
 
         // Accessing parameters loaded from config files
         val number = engine.config.getInt("exampleNumber")
         Logger.info { "Example number loaded from config file: $number" }
     }
-
-    override fun onUpdate() { }
-
-    override fun onRender() { }
-
-    override fun onDestroy() { }
 }

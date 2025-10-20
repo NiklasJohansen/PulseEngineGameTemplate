@@ -11,7 +11,7 @@ import no.njoh.pulseengine.core.input.MouseButton
 import no.njoh.pulseengine.core.shared.primitives.Color
 import no.njoh.pulseengine.core.shared.utils.Camera2DController
 
-fun main() = PulseEngine.run(GraphicsExample::class)
+fun main() = PulseEngine.run<GraphicsExample>()
 
 class GraphicsExample : PulseEngineGame()
 {
@@ -83,6 +83,4 @@ class GraphicsExample : PulseEngineGame()
             uiSurface.drawQuad(engine.input.xMouse - 10f, engine.input.yMouse - 10f, 20f, 20f)
         }
     }
-
-    override fun onDestroy() { }
 }

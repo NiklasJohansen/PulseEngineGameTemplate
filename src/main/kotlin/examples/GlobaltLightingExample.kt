@@ -3,26 +3,23 @@ package examples
 import no.njoh.pulseengine.core.PulseEngine
 import no.njoh.pulseengine.core.PulseEngineGame
 import no.njoh.pulseengine.core.asset.types.Texture
-import no.njoh.pulseengine.core.graphics.api.Multisampling
-import no.njoh.pulseengine.core.graphics.api.TextureFilter
 import no.njoh.pulseengine.core.graphics.api.TextureFormat.*
 import no.njoh.pulseengine.core.graphics.postprocessing.effects.BloomEffect
 import no.njoh.pulseengine.core.graphics.postprocessing.effects.ColorGradingEffect
 import no.njoh.pulseengine.core.input.MouseButton
 import no.njoh.pulseengine.core.shared.primitives.Color
-import no.njoh.pulseengine.modules.lighting.direct.DirectLightType.*
-import no.njoh.pulseengine.modules.lighting.direct.DirectLightingSystem
-import no.njoh.pulseengine.modules.lighting.direct.DirectShadowType.*
 import no.njoh.pulseengine.modules.lighting.global.GlobalIlluminationSystem
 import no.njoh.pulseengine.modules.lighting.shared.NormalMapRenderer.Orientation.*
 import no.njoh.pulseengine.modules.scene.entities.Backdrop
 import no.njoh.pulseengine.modules.scene.entities.Camera
 import no.njoh.pulseengine.modules.scene.entities.Lamp
 import no.njoh.pulseengine.modules.scene.entities.Wall
+import no.njoh.pulseengine.modules.scene.systems.EntityRendererImpl
+import no.njoh.pulseengine.modules.scene.systems.EntityUpdater
 import kotlin.math.cos
 import kotlin.math.sin
 
-fun main() = PulseEngine.run(GlobalLightingExample::class)
+fun main() = PulseEngine.run<GlobalLightingExample>()
 
 class GlobalLightingExample : PulseEngineGame()
 {
@@ -40,6 +37,10 @@ class GlobalLightingExample : PulseEngineGame()
         engine.asset.load(Texture("/examples/assets/crate_albedo.png", "crate_albedo"))
         engine.asset.load(Texture("/examples/assets/crate_normal.png", "crate_normal", format = RGBA8))
 
+        // Add systems to update and render entities
+        engine.scene.addSystem(EntityUpdater())
+        engine.scene.addSystem(EntityRendererImpl())
+
         // Create a backdrop for the lights to shine on
         val backdrop = Backdrop()
         backdrop.z = 1f
@@ -47,8 +48,8 @@ class GlobalLightingExample : PulseEngineGame()
         backdrop.height = 512f * 5f
         backdrop.xTiling = 5f
         backdrop.yTiling = 5f
-        backdrop.textureName = "cobblestone_albedo"
-        backdrop.normalMapName = "cobblestone_normal"
+        backdrop.baseTexture = "cobblestone_albedo"
+        backdrop.normalMapTexture = "cobblestone_normal"
         backdrop.normalMapOrientation = NORMAL
         engine.scene.addEntity(backdrop)
 
@@ -57,8 +58,8 @@ class GlobalLightingExample : PulseEngineGame()
         wall.z = -0.1f
         wall.width = 100f
         wall.height = 100f
-        wall.textureName = "crate_albedo"
-        wall.normalMapName = "crate_normal"
+        wall.baseTexture = "crate_albedo"
+        wall.normalMapTexture = "crate_normal"
         wall.normalMapOrientation = INVERT_Y
         engine.scene.addEntity(wall)
 
@@ -107,19 +108,13 @@ class GlobalLightingExample : PulseEngineGame()
         // Find the lamp entity and update its position
         engine.scene.getFirstEntityOfType<Lamp>()?.apply()
         {
-            // Set xy position of light source
+            // Set xy position of the light source
             val mousePressed = engine.input.isPressed(MouseButton.LEFT)
             x = if (mousePressed) engine.input.xWorldMouse else cos(angle) * 200f
             y = if (mousePressed) engine.input.yWorldMouse else sin(angle) * 200f
 
-            // Increase rotation angle
+            // Increase the rotation angle
             angle += 0.01f
         }
     }
-
-    override fun onUpdate() { }
-
-    override fun onRender() { }
-
-    override fun onDestroy() { }
 }

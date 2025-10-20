@@ -1,13 +1,11 @@
 // Initialization Script for Development
+// Excluded in the release build
 
-// Default key bindings
-bind ESCAPE exit
-bind F1 showConsole
+// Key bindings
 bind F2 showSceneEditor
 bind F3 showMetricViewer
 bind F4 showGpuMonitor
 bind F5 reloadEntityAndSystemTypes
-bind LEFT_ALT+ENTER toggleFullscreen
 
 // Uncomment and set path to get hot-reloading of assets and shaders
 // watchFileChange path="absolute-path-to-resource-folder" triggerCommand="reloadAsset" intervalMillis=500

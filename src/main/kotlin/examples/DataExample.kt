@@ -4,7 +4,7 @@ import no.njoh.pulseengine.core.PulseEngine
 import no.njoh.pulseengine.core.PulseEngineGame
 import no.njoh.pulseengine.core.shared.utils.Logger
 
-fun main() = PulseEngine.run(DataExample::class)
+fun main() = PulseEngine.run<DataExample>()
 
 class DataExample : PulseEngineGame()
 {
@@ -28,12 +28,12 @@ class DataExample : PulseEngineGame()
         {
             // Load game state form external save directory (loadObjectAsync is a non-blocking alternative)
             val externalState = engine.data.loadObject<GameState>("external_game_state.dat")
-            Logger.info { "Loaded external game state: $externalState from ${engine.data.saveDirectory}" }
+            Logger.info { "Loaded external game state: $externalState from ${engine.config.saveDirectory}" }
         }
-        else Logger.info {"External game state does not yet exist at ${engine.data.saveDirectory}" }
+        else Logger.info { "External game state does not yet exist at ${engine.config.saveDirectory}" }
 
         // Set tick rate to low value to show interpolation in action
-        engine.config.fixedTickRate = 5
+        engine.config.fixedTickRate = 5f
     }
 
     override fun onFixedUpdate()
@@ -47,28 +47,28 @@ class DataExample : PulseEngineGame()
 
     override fun onUpdate()
     {
-        // Use deltaTime to maintain consistent game speed in update step
+        // Use deltaTime to maintain consistent game speed in the update step
         val dt = engine.data.deltaTime
     }
 
     override fun onRender()
     {
-        // Draw text at current position
+        // Draw text at the current position
         engine.gfx.mainSurface.drawText("Not Interpolated", currentPosition, 300f)
 
-        // Create linearly interpolated position
+        // Create a linearly interpolated position
         val i = engine.data.interpolation
         val interpolatedPos = (1f - i) * lastPosition + i * currentPosition
 
-        // Draw text at interpolated position
+        // Draw text at the interpolated position
         engine.gfx.mainSurface.drawText("Interpolated", interpolatedPos, 500f)
     }
 
     override fun onDestroy()
     {
-        // Save game state to external directory (saveStateAsync is a non-blocking alternative)
+        // Save game state to an external directory (saveStateAsync is a non-blocking alternative)
         engine.data.saveObject(GameState("External game state!", 1234), "external_game_state.dat")
-        Logger.info { "Saved external game state to: ${engine.data.saveDirectory}" }
+        Logger.info { "Saved external game state to: ${engine.config.saveDirectory}" }
     }
 
     // Example game state class

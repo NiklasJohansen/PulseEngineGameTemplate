@@ -1,19 +1,29 @@
 import no.njoh.pulseengine.core.PulseEngine
 import no.njoh.pulseengine.core.PulseEngineGame
 import no.njoh.pulseengine.core.scene.SceneState.STOPPED
-import no.njoh.pulseengine.widgets.cli.CommandLine
-import no.njoh.pulseengine.widgets.editor.SceneEditor
-import no.njoh.pulseengine.widgets.metrics.GpuMonitor
-import no.njoh.pulseengine.widgets.metrics.MetricViewer
+import no.njoh.pulseengine.modules.cli.CommandLine
+import no.njoh.pulseengine.modules.editor.SceneEditor
+import no.njoh.pulseengine.modules.metrics.GpuMonitor
+import no.njoh.pulseengine.modules.metrics.MetricViewer
 
-fun main() = PulseEngine.run(GameTemplate::class)
+fun main() = PulseEngine.run<GameTemplate>()
 
 class GameTemplate : PulseEngineGame()
 {
     override fun onCreate()
     {
-        engine.widget.add(CommandLine(), SceneEditor(), MetricViewer(), GpuMonitor())
-        engine.console.runScript("init-dev.pes")
+        engine.service.add(
+            CommandLine(),  // F1
+            SceneEditor(),  // F2
+            MetricViewer(), // F3
+            GpuMonitor()    // F4
+        )
+
+        // Run initialization scripts
+        engine.console.runScript("init.pes")
+        engine.console.runScript("init-dev.pes") // Excluded in the release build
+
+        // Load and start the scene
         engine.scene.reload() // Load default.scn from disk
         engine.scene.start()
     }

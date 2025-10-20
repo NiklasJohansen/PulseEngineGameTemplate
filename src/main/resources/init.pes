@@ -1,0 +1,5 @@
+// Initialization Script
+
+// Key bindings
+bind F1 showConsole
+bind LEFT_ALT+ENTER toggleFullscreen

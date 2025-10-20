@@ -14,7 +14,7 @@ repositories {
 }
 
 dependencies {
-    implementation("no.njoh:pulse-engine:0.11.0")
+    implementation("no.njoh:pulse-engine:0.13.0")
 }
 
 kotlin {
