@@ -12,6 +12,8 @@ import no.njoh.pulseengine.core.shared.primitives.Color
 import no.njoh.pulseengine.modules.editor.SceneEditor
 import no.njoh.pulseengine.modules.scene.entities.Camera
 import no.njoh.pulseengine.modules.scene.entities.CommonSceneEntity
+import no.njoh.pulseengine.modules.scene.systems.EntityRendererImpl
+import no.njoh.pulseengine.modules.scene.systems.EntityUpdater
 
 fun main() = PulseEngine.run<SceneExample>()
 
@@ -42,6 +44,7 @@ class SceneExample : PulseEngineGame()
             entity.y = engine.window.height / 2f
             entity.width = 100f
             entity.height = 100f
+            engine.scene.addEntity(entity)
 
             // Creates a camera entity (provided by engine)
             val camera = Camera()
@@ -49,10 +52,13 @@ class SceneExample : PulseEngineGame()
             camera.y = engine.window.height / 2f
             camera.viewPortWidth = 1200f
             camera.viewPortHeight = 800f
-
-            // Adds the entities to the scene
-            engine.scene.addEntity(entity)
             engine.scene.addEntity(camera)
+
+            // Creates a system to render all entities
+            engine.scene.addSystem(EntityRendererImpl())
+
+            // And a system to update them
+            engine.scene.addSystem(EntityUpdater())
         }
 
         // Saves the active scene to disk
